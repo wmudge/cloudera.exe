@@ -18,3 +18,10 @@ common__region_default:
   aws: "{{ common__aws_region }}"
   azure: "{{ common__azure_region }}"
   gcp: "{{ common__gcp_region }}"
+
+common__aws_policy_urls_default:
+  log:                "{{ common__aws_policy_urls_default_base }}/aws-cdp-log-policy.json"
+  ranger_audit_s3:    "{{ common__aws_policy_urls_default_base }}/aws-cdp-ranger-audit-s3-policy.json"
+  datalake_admin_s3:  "{{ common__aws_policy_urls_default_base }}/aws-cdp-datalake-admin-s3-policy.json"
+  bucket_access:      "{{ common__aws_policy_urls_default_base }}/aws-cdp-bucket-access-policy.json"
+  dynamodb:           "{{ common__aws_policy_urls_default_base }}/aws-cdp-dynamodb-policy.json"

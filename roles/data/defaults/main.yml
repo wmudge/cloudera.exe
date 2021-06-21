@@ -37,8 +37,8 @@ data__aws_read_write_policy_suffix:           "{{ data.policy.aws.read_write.suf
 
 data__aws_role_suffix:                        "{{ data.role.aws.suffix | default(data__role_suffix) }}"
 
-data__aws_read_only_policy_url:               "{{ data.policy.aws.read_only.url | default(data__aws_policy_urls_default['read_only']) }}"
-data__aws_read_write_policy_url:              "{{ data.policy.aws.read_write.url | default(data__aws_policy_urls_default['read_write']) }}"
+data__aws_read_only_policy_url:               "{{ data.policy.aws.read_only.url | default(common__aws_policy_urls_default['bucket_access']) }}"
+data__aws_read_write_policy_url:              "{{ data.policy.aws.read_write.url | default(common__aws_policy_urls_default['datalake_admin_s3']) }}"
 
 data__aws_idbroker_role_name:                 "{{ common__aws_idbroker_role_name }}"
 data__aws_datalake_admin_role_name:           "{{ common__aws_datalake_admin_role_name }}"

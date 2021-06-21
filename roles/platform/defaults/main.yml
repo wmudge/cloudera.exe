@@ -114,7 +114,7 @@ plat__aws_ranger_audit_s3_policy_name:        "{{ env.aws.policy.name.ranger_aud
 plat__aws_bucket_access_policy_name:          "{{ env.aws.policy.name.bucket_access | default([plat__namespace, plat__aws_storage_suffix, plat__aws_policy_suffix] | join('-')) }}"
 plat__aws_dynamodb_policy_name:               "{{ env.aws.policy.name.dynamodb | default([plat__namespace, plat__aws_dynamodb_table_suffix, plat__aws_policy_suffix] | join('-')) }}"
 
-plat__aws_policy_urls:                        "{{ plat__aws_policy_urls_default | combine(env.aws.policy.url | default({})) }}"
+plat__aws_policy_urls:                        "{{ common__aws_policy_urls_default | combine(env.aws.policy.url | default({})) }}"
 
 # GCP
 plat__gcp_project:                            "{{ common__gcp_project }}"

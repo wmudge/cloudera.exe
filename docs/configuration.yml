@@ -40,6 +40,13 @@ env:
         log:
         ranger_audit_s3:
       suffix:
+      url_base: 
+      url:
+        bucket_access:
+        datalake_admin_s3:
+        dynamodb:
+        log:
+        ranger_audit_s3:
     role:
       label:
         cross_account:
