@@ -79,10 +79,10 @@
 # Note that the download mirror is localised to the Account and Region deliberately
 - name: Determine Download Mirror Bucket Name
   when:
-    - not infra__utlity_bucket_name
+    - not infra__utility_bucket_name
     - infra__create_utility_service | bool
   ansible.builtin.set_fact:
-    infra__utlity_bucket_name: "{{ [ infra__download_mirror_bucket_prefix, infra__aws_caller_info.account, infra__region ] | join('-') }}"
+    infra__utility_bucket_name: "{{ [ infra__download_mirror_bucket_prefix, infra__aws_caller_info.account, infra__region ] | join('-') }}"
 
 # These need to be set as facts on the Ansible Controller to be picked up later
 - name: Set Download Mirror output artefacts

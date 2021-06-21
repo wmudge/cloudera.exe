@@ -16,13 +16,13 @@
 
 - name: Ensure IAM Policy for Storage Utility Bucket
   community.aws.iam_managed_policy:
-    policy_name: "{{ infra__utlity_bucket_name }}"
-    policy_description: "Cloudera Storage Utility Service access policy for  {{ infra__utlity_bucket_name }}"
+    policy_name: "{{ infra__utility_bucket_name }}"
+    policy_description: "Cloudera Storage Utility Service access policy for  {{ infra__utility_bucket_name }}"
     policy:
       Version: "2012-10-17"
       Statement:
         - Effect: "Allow"
-          Sid: "{{ infra__utlity_bucket_name | replace('-','') }}"
+          Sid: "{{ infra__utility_bucket_name | replace('-','') }}"
           Action:
             - "s3:ListBucket"
             - "s3:PutObject"
@@ -30,18 +30,18 @@
             - "s3:GetObject"
             - "s3:DeleteObject"
           Resource:
-            - "arn:aws:s3:::{{ infra__utlity_bucket_name }}"
-            - "arn:aws:s3:::{{ infra__utlity_bucket_name }}/*"
+            - "arn:aws:s3:::{{ infra__utility_bucket_name }}"
+            - "arn:aws:s3:::{{ infra__utility_bucket_name }}/*"
     state: present
 
 - name: Create Role to access Storage Utility Service Bucket
   register: infra__download_mirror_role
   community.aws.iam_role:
     create_instance_profile: yes
-    name: "{{ infra__utlity_bucket_name }}"
+    name: "{{ infra__utility_bucket_name }}"
     state: present
     managed_policies:
-      - "{{ infra__utlity_bucket_name }}"
+      - "{{ infra__utility_bucket_name }}"
     assume_role_policy_document:
       Version: "2012-10-17"
       Statement:
@@ -53,7 +53,7 @@
 - name: Wait for Instance Profile to be returned
   register: __infra_utility_iam_role_info
   community.aws.iam_role_info:
-    name: "{{ infra__utlity_bucket_name }}"
+    name: "{{ infra__utility_bucket_name }}"
   retries: 10
   delay: 3
   until:

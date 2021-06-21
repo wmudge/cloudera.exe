@@ -15,17 +15,17 @@
 # limitations under the License.
 
 - name: Remove AWS Data Access Roles for Utility Service
-  when: infra__utlity_bucket_name | length > 0
+  when: infra__utility_bucket_name | length > 0
   community.aws.iam_role:
     region: "{{ infra__region }}"
-    name: "{{ infra__utlity_bucket_name }}"
+    name: "{{ infra__utility_bucket_name }}"
     purge_policies: yes
     delete_instance_profile: yes
     state: absent
 
 - name: Remove CDP Data Access Policies
-  when: infra__utlity_bucket_name | length > 0
+  when: infra__utility_bucket_name | length > 0
   community.aws.iam_managed_policy:
     region: "{{ infra__region }}"
-    policy_name: "{{ infra__utlity_bucket_name }}"
+    policy_name: "{{ infra__utility_bucket_name }}"
     state: absent

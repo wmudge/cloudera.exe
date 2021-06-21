@@ -38,6 +38,6 @@
   when: infra__create_utility_service
   amazon.aws.aws_s3:
     region: "{{ infra__region }}"
-    bucket: "{{ infra__utlity_bucket_name }}"
+    bucket: "{{ infra__utility_bucket_name }}"
     mode: create
     permission: private
