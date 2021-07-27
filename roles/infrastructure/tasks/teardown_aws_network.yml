@@ -16,9 +16,7 @@
 
 - name: Tear down AWS Security Groups associated with enviroment and datalake
   when: 
-    - infra__teardown_deletes_network 
     - infra__aws_vpc_id != ""
-    - not infra__force_teardown
   amazon.aws.ec2_group:
     region: "{{ infra__region }}"
     vpc_id: "{{ infra__aws_vpc_id }}"
