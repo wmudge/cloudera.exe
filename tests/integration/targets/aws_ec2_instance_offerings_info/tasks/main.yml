@@ -15,12 +15,59 @@
       register: caller_info
     - debug:
         var: caller_info
+
     - cloudera.exe.aws_ec2_instance_offerings_info:
       register: __region_types
-    - debug:
-        var: __region_types
+    - name: Region types
+      assert: 
+        that: __region_types.instance_types | length > 0
+
     - cloudera.exe.aws_ec2_instance_offerings_info:
         availability_zone: us-east-2b
       register: __az_types
-    - debug:
-        var: __az_types
+    - name: AZ types
+      assert: 
+        that: __az_types.instance_types | length > 0
+
+    - cloudera.exe.aws_ec2_instance_offerings_info:
+        availability_zone:
+          - us-east-2a
+          - us-east-2c
+      register: __multi_az_types
+    - name: Multiple AZ types
+      assert: 
+        that:
+          - __multi_az_types.instance_types | length > 0
+          - __multi_az_types.instance_types | selectattr('Location', 'regex', 'us-east-2[^ac]') | length == 0
+
+    - cloudera.exe.aws_ec2_instance_offerings_info:
+        availability_zone: us-east-2z
+      register: __no_az_types
+    - name: No AZ types
+      assert: 
+        that: __no_az_types.instance_types | length == 0
+
+    - cloudera.exe.aws_ec2_instance_offerings_info:
+        instance_type: t2.nano
+      register: __in_types
+    - name: Instance types
+      assert: 
+        that: __in_types.instance_types | length > 0
+
+    - cloudera.exe.aws_ec2_instance_offerings_info:
+        instance_type:
+          - t2.nano
+          - p3.8xlarge
+      register: __multi_in_types
+    - name: Multiple instance types
+      assert: 
+        that:
+          - __multi_in_types.instance_types | length > 0
+          - __multi_in_types.instance_types | selectattr('InstanceType', 'regex', '^(?!t2.nano|p3.8xlarge).*') | length == 0
+
+    - cloudera.exe.aws_ec2_instance_offerings_info:
+        instance_type: foobar
+      register: __no_in_types
+    - name: No instance types
+      assert: 
+        that: __no_in_types.instance_types | length == 0
