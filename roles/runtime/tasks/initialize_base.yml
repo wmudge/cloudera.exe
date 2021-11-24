@@ -165,6 +165,18 @@
         loop_var: __ml_config
         label: "{{ config.name }}"
 
+    - name: Confirm availability of requested instance types in subnets
+      ansible.builtin.assert:
+        that:
+          - __available_instance_types | length != run__public_subnet_ids | union(run__private_subnet_ids) | length 
+        fail_msg: "Requested instance type, {{ __requested_instance_type }}, is not available in all designated subnets."
+        quiet: yes
+      vars:
+        __available_instance_types: "{{ run__instance_type_offerings | selectattr('InstanceType', 'eq', __requested_instance_type) | list }}"
+      loop: "{{ run__ml_configs | selectattr('k8s_request') | selectattr('instanceGroups') | selectattr('instanceType') | list }}"
+      loop_control:
+        loop_var: __requested_instance_type
+
 - name: Prepare for CDP DE Service experiences
   when: run__include_de
   block:

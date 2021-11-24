@@ -118,3 +118,25 @@
     run__aws_subnet_ids: "{{ run__aws_public_subnet_ids | union(run__aws_private_subnet_ids) }}"
     run__public_subnet_ids: "{{ run__aws_public_subnet_ids }}"
     run__private_subnet_ids: "{{ run__aws_private_subnet_ids }}"
+
+- name: Retrieve AWS instance types for CML
+  when: run__include_ml
+  block:
+    - name: Retrieve details for AWS subnets
+      amazon.aws.ec2_vpc_subnet_info:
+        region: "{{ run__region }}"
+        filters:
+          vpc-id: "{{ run__aws_vpc_id }}"
+      register: __aws_subnets_info
+
+    - name: Retrieve available AWS instance types for each subnet's availability zone
+      cloudera.exe.aws_ec2_instance_offerings_info:
+        region: "{{ run__region }}"
+        availability-zone: "{{ __aws_subnet_az_list }}"
+      vars:
+        __aws_subnet_az_list: "{{ __aws_subnets_info.subnets | selectattr('availability_zone') | list | unique }}"
+      register: __aws_instance_type_offerings
+
+    - name: Set fact for available AWS instance types
+      ansible.builtin.set_fact:
+        run__instance_type_offerings: "{{ __aws_instance_type_offerings.instance_types }}"
