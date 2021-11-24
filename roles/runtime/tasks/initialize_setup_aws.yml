@@ -132,9 +132,9 @@
     - name: Retrieve available AWS instance types for each subnet's availability zone
       cloudera.exe.aws_ec2_instance_offerings_info:
         region: "{{ run__region }}"
-        availability-zone: "{{ __aws_subnet_az_list }}"
+        availability_zone: "{{ __aws_subnet_az_list }}"
       vars:
-        __aws_subnet_az_list: "{{ __aws_subnets_info.subnets | selectattr('availability_zone') | list | unique }}"
+        __aws_subnet_az_list: "{{ __aws_subnets_info.subnets | map(attribute='availability_zone') | list | unique }}"
       register: __aws_instance_type_offerings
 
     - name: Set fact for available AWS instance types

@@ -166,14 +166,15 @@
         label: "{{ config.name }}"
 
     - name: Confirm availability of requested instance types in subnets
+      when: run__infra_type == 'aws'
       ansible.builtin.assert:
         that:
-          - __available_instance_types | length != run__public_subnet_ids | union(run__private_subnet_ids) | length 
-        fail_msg: "Requested instance type, {{ __requested_instance_type }}, is not available in all designated subnets."
+          - __available_instance_types | length == run__public_subnet_ids | union(run__private_subnet_ids) | length 
+        fail_msg: "Requested instance type, {{ __requested_instance_type }}, must be available in all designated subnets."
         quiet: yes
       vars:
         __available_instance_types: "{{ run__instance_type_offerings | selectattr('InstanceType', 'eq', __requested_instance_type) | list }}"
-      loop: "{{ run__ml_configs | selectattr('k8s_request') | selectattr('instanceGroups') | selectattr('instanceType') | list }}"
+      loop: "{{ run__ml_configs | community.general.json_query('[].k8s_request.instanceGroups[].instanceType') | list }}"
       loop_control:
         loop_var: __requested_instance_type
 
