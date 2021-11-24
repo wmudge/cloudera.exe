@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  environment:
+    AWS_REGION: "{{ aws_region }}"
+    AWS_ACCESS_KEY: "{{ aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
+  tasks:
+    - debug:
+        msg: This is the entrypoint
+    - include_tasks: 'tasks/main.yml'

@@ -1,0 +1,26 @@
+---
+- module_defaults:
+    group/aws:
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        security_token: "{{ security_token | default(omit) }}"
+    cloudera.exe.aws_ec2_instance_offerings_info:
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+  block:
+    - name: Get the current caller identity information
+      aws_caller_info: # This must _not_ be fully qualified for the 'groups/aws' syntax to work
+      register: caller_info
+    - debug:
+        var: caller_info
+    - cloudera.exe.aws_ec2_instance_offerings_info:
+      register: __region_types
+    - debug:
+        var: __region_types
+    - cloudera.exe.aws_ec2_instance_offerings_info:
+        availability_zone: us-east-2b
+      register: __az_types
+    - debug:
+        var: __az_types
