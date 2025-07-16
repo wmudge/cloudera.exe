@@ -1,6 +1,4 @@
----
-
-# Copyright 2024 Cloudera, Inc. All Rights Reserved.
+# Copyright 2025 Cloudera, Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-namespace:  cloudera
-name:       exe
-version:    2.4.1
-readme:     README.md
+---
+
+namespace: cloudera
+name: exe
+version: 3.0.0-rc.1
+readme: README.md
 authors:
   - Jim Enright @jenright
   - Ronald Suplina @rsuplina
@@ -25,32 +25,32 @@ authors:
 
 description: >
   A set of roles, modules, and plugins that encapsulate best practices and opinionated
-  deployment and management processes for Cloudera Data Platform (CDP) Public Cloud
-  and Private Cloud deployments.
+  deployment and management processes for Cloudera on cloud and on premise deployments.
 license_file: LICENSE
 tags:
-- cloudera
-- cdp
-- azure
-- aws
-- gcp
-- private_cloud
-- public_cloud
-- data_service
-- cloudera_manager
-- cm
+  - application
+  - cloud
+  - tools
+  - cloudera
+  - cdp
+  - cdh
+  - private_cloud
+  - on_premise
+  - data_services
+  - cloudera_manager
+  - cm
 
 dependencies:
-  'ansible.netcommon':    '2.5.1'
-  'community.general':    '4.5.0'
+  "ansible.netcommon": "2.5.1"
+  "community.general": "4.5.0"
 
-repository:     https://github.com/cloudera-labs/cloudera.exe
-homepage:       https://github.com/cloudera-labs/cloudera.exe
-issues:         https://github.com/cloudera-labs/cloudera.exe/issues
-documentation:  https://cloudera-labs.github.io/cloudera.exe
+repository: https://github.com/cloudera-labs/cloudera.exe
+homepage: https://github.com/cloudera-labs/cloudera.exe
+issues: https://github.com/cloudera-labs/cloudera.exe/issues
+documentation: https://cloudera-labs.github.io/cloudera.exe
 
 build_ignore:
-- '.*'
-- docs
-- docsrc
-- site
+  - ".*"
+  - docs
+  - docsrc
+  - site
