@@ -72,10 +72,10 @@
         path: "{{ '/usr/bin/python' + __python_version }}"
         priority: 100
 
-    - name: Gather distribution and Python details
-      ansible.builtin.setup:
-        gather_subset:
-          - python
+- name: Gather distribution and Python details
+  ansible.builtin.setup:
+    gather_subset:
+      - python
 
 - name: install pip
   vars:
