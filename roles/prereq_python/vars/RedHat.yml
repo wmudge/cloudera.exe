@@ -36,6 +36,7 @@ __python2_packages:
 
 __python3_pip_packages:
   - "python{{ __python_version }}-pip"
+  - "python{{ __python_version }}-setuptools"
 
 __python2_pip_packages:
   - "python{{ __python_version }}-pip"
